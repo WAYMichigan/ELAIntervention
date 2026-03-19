@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3: Word Choice & Connotation</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE1;
+    --teal: #1A5F6A;
+    --teal-lt: #E6F2F4;
+    --teal-mid: #2E8B9A;
+    --navy: #1A2E44;
+    --amber: #C47B2B;
+    --amber-lt: #FEF5E7;
+    --green: #2A6B3C;
+    --green-lt: #EBF5EE;
+    --red: #8B2A2A;
+    --red-lt: #F9EDED;
+    --gray: #666;
+    --gray-lt: #F0EDE8;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(26,46,68,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,46,68,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── Top header bar ── */
+  .header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .lesson-badge {
+    background: var(--teal-mid);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .header-title {
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .header-standard {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(26,46,68,0.08);
+  }
+  .progress-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+  }
+  .progress-tab {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .progress-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    font-weight: 600;
+  }
+  .progress-tab.done {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  .progress-tab .tab-icon { margin-right: 6px; }
+
+  /* ── Main layout ── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ── Section panels ── */
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Section label ── */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 6px;
+  }
+  .section-heading {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-label.teal { color: var(--teal); }
+  .card-label.amber { color: var(--amber); }
+  .card-label.navy { color: var(--navy); }
+
+  /* ── Practice text ── */
+  .text-box {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--navy);
+  }
+  .text-box-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .text-box p + p { margin-top: 14px; }
+
+  /* ── Model example ── */
+  .model-box {
+    background: var(--teal-lt);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    border: 1px solid rgba(26,95,106,0.15);
+  }
+  .model-box .model-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .model-box p { font-size: 15px; color: var(--navy); line-height: 1.7; }
+  .model-box strong { color: var(--teal); }
+
+  /* ── Frame box ── */
+  .frame-box {
+    background: var(--amber-lt);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border: 1px solid rgba(196,123,43,0.2);
+  }
+  .frame-box .frame-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .frame-box p { font-size: 15px; font-style: italic; color: var(--navy); }
+  .frame-box em { font-style: normal; font-weight: 600; color: var(--amber); }
+
+  /* ── Question blocks ── */
+  .question-block {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .question-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 8px;
+  }
+  .question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .question-hint {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* ── MC options ── */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(26,46,68,0.12);
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--cream);
+  }
+  .mc-option:hover { border-color: var(--teal-mid); background: var(--teal-lt); }
+  .mc-option input[type="radio"] { margin-top: 2px; accent-color: var(--teal); flex-shrink: 0; width: 16px; height: 16px; }
+  .mc-option label { font-size: 15px; cursor: pointer; line-height: 1.5; color: var(--navy); }
+  .mc-option.correct { border-color: var(--green); background: var(--green-lt); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-lt); }
+
+  /* ── Text areas ── */
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(26,46,68,0.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--cream);
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea:focus { outline: none; border-color: var(--teal-mid); background: white; }
+  textarea::placeholder { color: #aaa; }
+
+  /* ── Check answer button ── */
+  .check-btn {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    margin-top: 12px;
+  }
+  .check-btn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .check-btn:active { transform: translateY(0); }
+
+  /* ── Feedback ── */
+  .feedback {
+    display: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .feedback.correct-fb {
+    background: var(--green-lt);
+    border: 1px solid rgba(42,107,60,0.2);
+    color: var(--green);
+  }
+  .feedback.wrong-fb {
+    background: var(--red-lt);
+    border: 1px solid rgba(139,42,42,0.2);
+    color: var(--red);
+  }
+  .feedback.info-fb {
+    background: var(--teal-lt);
+    border: 1px solid rgba(26,95,106,0.2);
+    color: var(--teal);
+  }
+  .feedback .fb-icon { font-weight: 700; margin-right: 6px; }
+
+  /* ── Self-check rubric ── */
+  .rubric {
+    border: 1px solid rgba(26,46,68,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .rubric-header {
+    background: var(--navy);
+    color: white;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .rubric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell:last-child { border-right: none; }
+  .rubric-cell.level-label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rubric-cell.level-1 { background: #FFF8F0; color: var(--amber); }
+  .rubric-cell.level-2 { background: #F0F7FF; color: #2260A0; }
+  .rubric-cell.level-3 { background: var(--green-lt); color: var(--green); }
+  .rubric-desc { color: var(--navy); font-weight: 400; }
+
+  /* ── Nav buttons ── */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(26,46,68,0.1);
+  }
+  .nav-btn {
+    background: var(--white);
+    color: var(--navy);
+    border: 2px solid rgba(26,46,68,0.15);
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .nav-btn.primary {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .nav-btn.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Completion screen ── */
+  .complete-screen {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .complete-icon { font-size: 64px; margin-bottom: 20px; }
+  .complete-title {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .complete-sub { font-size: 16px; color: var(--gray); max-width: 420px; margin: 0 auto 28px; line-height: 1.6; }
+  .complete-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-lt);
+    border: 2px solid var(--green);
+    color: var(--green);
+    border-radius: 40px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Definition highlight ── */
+  .def-word { font-weight: 700; color: var(--teal); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: rgba(26,46,68,0.08); margin: 24px 0; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .header-standard { display: none; }
+    .rubric-row { grid-template-columns: 1fr; }
+    .rubric-cell { border-right: none; border-bottom: 1px solid rgba(26,46,68,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="lesson-badge">Grade 6 ELA · Module 1 · Lesson 3</span>
+    <span class="header-title">Word Choice & Connotation</span>
+    <span class="header-standard">RL.6.4</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-tab active" id="tab-0" onclick="goTo(0)"><span class="tab-icon">📖</span> I Do</div>
+    <div class="progress-tab" id="tab-1" onclick="goTo(1)"><span class="tab-icon">🤝</span> We Do</div>
+    <div class="progress-tab" id="tab-2" onclick="goTo(2)"><span class="tab-icon">✏️</span> You Do</div>
+  </div>
+</div>
+
+<div class="main">
+  
+<div id="sec-ido" class="section active">
+  <div class="section-eyebrow">I Do — Watch and Learn</div>
+  <div class="section-heading">Why Does Word Choice Matter?</div>
+  <div class="section-sub">Authors choose every word on purpose. The specific word an author picks — instead of a simpler or more neutral word — shapes how you feel while reading and what you understand about characters, settings, and ideas.</div>
+
+  <div class="card">
+    <div class="card-label teal">📌 Two Key Terms</div>
+    <p><span class="def-word">Denotation</span> — the dictionary definition of a word. What it literally means.</p>
+    <p><span class="def-word">Connotation</span> — the emotional feeling or association a word carries beyond its literal meaning.</p>
+    <p style="margin-top:12px">Example: "cheap" and "economical" both mean low cost. But "cheap" feels negative (low quality), while "economical" feels positive (smart spending). Same denotation. Very different connotation.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✦ Model Analysis</div>
+    <p><strong>Sentence:</strong> "The old house crouched at the end of the lane."</p>
+    <p><strong>Word to analyze:</strong> "crouched"</p>
+    <p><strong>Denotation:</strong> bent low, hunched down</p>
+    <p><strong>Connotation:</strong> threatening, lurking, animal-like — as if the house is waiting to pounce</p>
+    <p><strong>Effect on tone:</strong> Creates a sinister, unsettling atmosphere before we've even entered the house</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Sentence Frame — Word Choice Analysis</div>
+    <p>The word "<em>[word]</em>" literally means <em>[denotation]</em>. In this context, it suggests <em>[connotation / emotional association]</em>. This creates a <em>[tone word: dark / hopeful / threatening / lonely / etc.]</em> tone because <em>[reasoning]</em>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn primary" onclick="goTo(1)">We Do — Let's Practice →</button>
+  </div>
+</div>
+
+<div id="sec-wedo" class="section">
+  <div class="section-eyebrow">We Do — Guided Practice</div>
+  <div class="section-heading">Read, Find, Analyze</div>
+  <div class="section-sub">Read the paragraph below. The underlined words are your focus. Answer the questions about each one.</div>
+
+  <div class="text-box">
+    <div class="text-box-label">📄 Practice Text — "First Chair"</div>
+    <p>The concert hall <strong>swallowed</strong> Marcus whole the moment he stepped through its doors. Three thousand seats. A chandelier that looked like it had been stolen from a palace. And at the center of the stage — alone under a single light — his violin waited for him like an accusation.</p>
+    <p>He had practiced this piece for eleven months. He knew every note, every breath, every shift of the bow. And yet his hands were <strong>traitors</strong>, shaking slightly as he tuned the strings backstage. His teacher placed a hand on his shoulder and said something. Marcus did not hear the words. He was already on the stage in his mind, already falling.</p>
+  </div>
+
+  <div class="question-block" id="q1">
+    <div class="question-num">Question 1 of 3</div>
+    <div class="question-text">The text says the concert hall "swallowed" Marcus. What does this word choice suggest?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q1" id="q1a"><label for="q1a">The concert hall is very clean and well-maintained.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1b"><label for="q1b">Marcus felt overwhelmed and consumed by the enormous space — small and vulnerable inside it.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1c"><label for="q1c">The hall is dark and hard to see in.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1d"><label for="q1d">Marcus enjoys performing in large concert halls.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q1', 1, 'Correct! "Swallowed" has a predatory, consuming connotation — it suggests something being taken in and engulfed. Applied to a person entering a building, it makes Marcus seem tiny and powerless. That's a very deliberate word choice.', 'Not quite. Think about what "swallowed" normally implies — something consuming or engulfing something else. How does that connotation change how we see Marcus in this space?')">Check My Answer</button>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="question-num">Question 2 of 3</div>
+    <div class="question-text">Marcus calls his hands "traitors." What tone does this word choice create?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q2" id="q2a"><label for="q2a">Hopeful — Marcus believes his hands will eventually cooperate.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2b"><label for="q2b">Humorous — Marcus is joking about how his hands behave.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2c"><label for="q2c">Anxious and betrayed — his own body is working against him at the worst possible moment.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2d"><label for="q2d">Angry at his teacher for pushing him too hard.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q2', 2, 'Correct! "Traitors" is a word typically used for people who betray a cause or person they should be loyal to. By applying it to his own hands, Marcus is expressing a feeling of being betrayed by his own body — a powerful way to show performance anxiety.', 'Not quite. "Traitors" has a very specific connotation — it implies betrayal and disloyalty. Who or what is being disloyal to Marcus in this moment?')">Check My Answer</button>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <div class="question-block" id="q3">
+    <div class="question-num">Question 3 of 3</div>
+    <div class="question-text">Which response best analyzes the word "accusation" in the phrase "his violin waited for him like an accusation"?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q3" id="q3a"><label for="q3a">"Accusation means a charge of wrongdoing. This is a simile comparing the violin to an accusation."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3b"><label for="q3b">"The word 'accusation' literally means a claim that someone did something wrong. Here it suggests the violin is judging Marcus — as if it is waiting to expose his failures. This creates a tense, guilty tone, making Marcus seem like he is on trial rather than about to perform."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3c"><label for="q3c">"This word means the violin is angry at Marcus for not practicing enough."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3d"><label for="q3d">"I think this is a strange word to use for a violin."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q3', 1, 'Correct! This response includes all three parts of the frame: denotation (what it literally means), connotation (the emotional suggestion), and the effect on tone (tense and guilty). That's a complete word choice analysis.', 'Not quite. A strong word choice analysis needs three things: the literal meaning, what it suggests emotionally, and what tone it creates. Which option has all three?')">Check My Answer</button>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(0)">← I Do</button>
+    <button class="nav-btn primary" onclick="goTo(2)">You Do — Your Turn →</button>
+  </div>
+</div>
+
+<div id="sec-youdo" class="section">
+  <div class="section-eyebrow">You Do — Independent Practice</div>
+  <div class="section-heading">Analyze Two Word Choices</div>
+  <div class="section-sub">Read the new paragraph below. Choose two bolded words and complete the sentence frame for each.</div>
+
+  <div class="text-box">
+    <div class="text-box-label">📄 New Practice Text — "The Interview"</div>
+    <p>Priya had rehearsed her answers forty-seven times. She had a number for it — forty-seven — because she had been <strong>counting</strong> every session in her notebook since March. Now, sitting in the waiting room of the law firm, surrounded by people in suits that cost more than her mother's monthly rent, she felt her confidence <strong>dissolve</strong> like sugar in rain.</p>
+    <p>The receptionist called her name. Priya stood. She was eighteen years old, the daughter of immigrants, wearing a blazer she had <strong>borrowed</strong> from her debate coach, and she was about to walk into a room and convince three partners that she deserved a spot in their summer program. She straightened her spine and walked through the door.</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Sentence Frame</div>
+    <p>The word "<em>[word]</em>" literally means <em>[denotation]</em>. In this context, it suggests <em>[connotation]</em>. This creates a <em>[tone word]</em> tone because <em>[reasoning]</em>.</p>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 1 — First Word Choice</div>
+    <div class="question-text">Choose one of the bolded words from the text. Use the sentence frame to write your word choice analysis.</div>
+    <textarea placeholder="The word &quot;...&quot; literally means..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd1')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd1" style="display:none"><span class="fb-icon">💡</span> <strong>Model (using "dissolve"):</strong> The word "dissolve" literally means to break down or disappear into a liquid. In this context, it suggests that Priya's confidence is fragile and temporary — it disappears the moment it meets pressure, just as sugar disappears in rain. This creates a vulnerable, anxious tone because it shows that even all of Priya's preparation cannot protect her from self-doubt in the moment.</div>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 2 — Second Word Choice</div>
+    <div class="question-text">Choose a second bolded word and complete the frame again.</div>
+    <textarea placeholder="The word &quot;...&quot; literally means..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd2')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd2" style="display:none"><span class="fb-icon">💡</span> <strong>Model (using "borrowed"):</strong> The word "borrowed" literally means taken temporarily from someone else. Here it suggests that Priya doesn't fully belong in this world — she is borrowing not just a blazer but an identity, a costume that isn't really hers. This creates a tone of quiet tension between who Priya is and the world she is trying to enter.</div>
+  </div>
+
+  <div class="rubric">
+    <div class="rubric-header">✦ Self-Check Rubric</div>
+    <div class="rubric-row">
+      <div class="rubric-cell level-1 level-label">Level 1</div>
+      <div class="rubric-cell level-2 level-label">Level 2</div>
+      <div class="rubric-cell level-3 level-label">Level 3</div>
+    </div>
+    <div class="rubric-row">
+      <div class="rubric-cell rubric-desc">I identified the word's basic meaning and noted the general feeling it creates.</div>
+      <div class="rubric-cell rubric-desc">I used the frame correctly: denotation, connotation, tone, and reasoning for both words.</div>
+      <div class="rubric-cell rubric-desc">I explained precisely how the author's word choice contributes to character or atmosphere, with sophisticated tone vocabulary and specific reasoning.</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(1)">← We Do</button>
+    <button class="nav-btn primary" onclick="document.querySelector('.main').innerHTML='<div class=complete-screen><div class=complete-icon>🔍</div><div class=complete-title>Lesson 3 Complete!</div><div class=complete-sub>Great word analysis work. Copy your two task responses and submit them to your mentor in Google Classroom.</div><div class=complete-badge>✓ Lesson 3 — Word Choice & Connotation (RL.6.4)</div></div>'">Submit & Finish ✓</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+  let currentSection = 0;
+  const sections = ['ido', 'wedo', 'youdo'];
+
+  function goTo(idx) {
+    sections.forEach((s, i) => {
+      document.getElementById('sec-' + s).classList.toggle('active', i === idx);
+      document.getElementById('tab-' + i).className = 'progress-tab' +
+        (i === idx ? ' active' : (i < idx ? ' done' : ''));
+    });
+    currentSection = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function checkMC(qId, correctIdx, feedbackCorrect, feedbackWrong) {
+    const opts = document.querySelectorAll('#' + qId + ' .mc-option');
+    const selected = [...opts].findIndex(o => o.querySelector('input').checked);
+    if (selected === -1) { alert('Please select an answer first.'); return; }
+    const fb = document.getElementById('fb-' + qId);
+    opts.forEach((o, i) => {
+      o.classList.remove('correct', 'wrong');
+      if (i === correctIdx) o.classList.add('correct');
+      else if (i === selected && i !== correctIdx) o.classList.add('wrong');
+    });
+    if (selected === correctIdx) {
+      fb.className = 'feedback correct-fb';
+      fb.innerHTML = '<span class="fb-icon">✓</span> ' + feedbackCorrect;
+    } else {
+      fb.className = 'feedback wrong-fb';
+      fb.innerHTML = '<span class="fb-icon">✗</span> ' + feedbackWrong;
+    }
+    fb.style.display = 'block';
+  }
+
+  function showModelFeedback(id) {
+    const fb = document.getElementById('fb-' + id);
+    fb.className = 'feedback info-fb';
+    fb.style.display = 'block';
+  }
+</script>
+</body>
+</html>

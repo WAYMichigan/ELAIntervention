@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7: Counterargument</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE1;
+    --teal: #1A5F6A;
+    --teal-lt: #E6F2F4;
+    --teal-mid: #2E8B9A;
+    --navy: #1A2E44;
+    --amber: #C47B2B;
+    --amber-lt: #FEF5E7;
+    --green: #2A6B3C;
+    --green-lt: #EBF5EE;
+    --red: #8B2A2A;
+    --red-lt: #F9EDED;
+    --gray: #666;
+    --gray-lt: #F0EDE8;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(26,46,68,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,46,68,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── Top header bar ── */
+  .header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .lesson-badge {
+    background: var(--teal-mid);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .header-title {
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .header-standard {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(26,46,68,0.08);
+  }
+  .progress-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+  }
+  .progress-tab {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .progress-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    font-weight: 600;
+  }
+  .progress-tab.done {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  .progress-tab .tab-icon { margin-right: 6px; }
+
+  /* ── Main layout ── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ── Section panels ── */
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Section label ── */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 6px;
+  }
+  .section-heading {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-label.teal { color: var(--teal); }
+  .card-label.amber { color: var(--amber); }
+  .card-label.navy { color: var(--navy); }
+
+  /* ── Practice text ── */
+  .text-box {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--navy);
+  }
+  .text-box-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .text-box p + p { margin-top: 14px; }
+
+  /* ── Model example ── */
+  .model-box {
+    background: var(--teal-lt);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    border: 1px solid rgba(26,95,106,0.15);
+  }
+  .model-box .model-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .model-box p { font-size: 15px; color: var(--navy); line-height: 1.7; }
+  .model-box strong { color: var(--teal); }
+
+  /* ── Frame box ── */
+  .frame-box {
+    background: var(--amber-lt);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border: 1px solid rgba(196,123,43,0.2);
+  }
+  .frame-box .frame-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .frame-box p { font-size: 15px; font-style: italic; color: var(--navy); }
+  .frame-box em { font-style: normal; font-weight: 600; color: var(--amber); }
+
+  /* ── Question blocks ── */
+  .question-block {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .question-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 8px;
+  }
+  .question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .question-hint {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* ── MC options ── */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(26,46,68,0.12);
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--cream);
+  }
+  .mc-option:hover { border-color: var(--teal-mid); background: var(--teal-lt); }
+  .mc-option input[type="radio"] { margin-top: 2px; accent-color: var(--teal); flex-shrink: 0; width: 16px; height: 16px; }
+  .mc-option label { font-size: 15px; cursor: pointer; line-height: 1.5; color: var(--navy); }
+  .mc-option.correct { border-color: var(--green); background: var(--green-lt); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-lt); }
+
+  /* ── Text areas ── */
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(26,46,68,0.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--cream);
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea:focus { outline: none; border-color: var(--teal-mid); background: white; }
+  textarea::placeholder { color: #aaa; }
+
+  /* ── Check answer button ── */
+  .check-btn {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    margin-top: 12px;
+  }
+  .check-btn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .check-btn:active { transform: translateY(0); }
+
+  /* ── Feedback ── */
+  .feedback {
+    display: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .feedback.correct-fb {
+    background: var(--green-lt);
+    border: 1px solid rgba(42,107,60,0.2);
+    color: var(--green);
+  }
+  .feedback.wrong-fb {
+    background: var(--red-lt);
+    border: 1px solid rgba(139,42,42,0.2);
+    color: var(--red);
+  }
+  .feedback.info-fb {
+    background: var(--teal-lt);
+    border: 1px solid rgba(26,95,106,0.2);
+    color: var(--teal);
+  }
+  .feedback .fb-icon { font-weight: 700; margin-right: 6px; }
+
+  /* ── Self-check rubric ── */
+  .rubric {
+    border: 1px solid rgba(26,46,68,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .rubric-header {
+    background: var(--navy);
+    color: white;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .rubric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell:last-child { border-right: none; }
+  .rubric-cell.level-label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rubric-cell.level-1 { background: #FFF8F0; color: var(--amber); }
+  .rubric-cell.level-2 { background: #F0F7FF; color: #2260A0; }
+  .rubric-cell.level-3 { background: var(--green-lt); color: var(--green); }
+  .rubric-desc { color: var(--navy); font-weight: 400; }
+
+  /* ── Nav buttons ── */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(26,46,68,0.1);
+  }
+  .nav-btn {
+    background: var(--white);
+    color: var(--navy);
+    border: 2px solid rgba(26,46,68,0.15);
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .nav-btn.primary {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .nav-btn.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Completion screen ── */
+  .complete-screen {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .complete-icon { font-size: 64px; margin-bottom: 20px; }
+  .complete-title {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .complete-sub { font-size: 16px; color: var(--gray); max-width: 420px; margin: 0 auto 28px; line-height: 1.6; }
+  .complete-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-lt);
+    border: 2px solid var(--green);
+    color: var(--green);
+    border-radius: 40px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Definition highlight ── */
+  .def-word { font-weight: 700; color: var(--teal); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: rgba(26,46,68,0.08); margin: 24px 0; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .header-standard { display: none; }
+    .rubric-row { grid-template-columns: 1fr; }
+    .rubric-cell { border-right: none; border-bottom: 1px solid rgba(26,46,68,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="lesson-badge">Grade 6 ELA · Module 2 · Lesson 7</span>
+    <span class="header-title">Counterargument</span>
+    <span class="header-standard">RI.6.8</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-tab active" id="tab-0" onclick="goTo(0)"><span class="tab-icon">📖</span> I Do</div>
+    <div class="progress-tab" id="tab-1" onclick="goTo(1)"><span class="tab-icon">🤝</span> We Do</div>
+    <div class="progress-tab" id="tab-2" onclick="goTo(2)"><span class="tab-icon">✏️</span> You Do</div>
+  </div>
+</div>
+
+<div class="main">
+  
+<div id="sec-ido" class="section active">
+  <div class="section-eyebrow">I Do — Watch and Learn</div>
+  <div class="section-heading">What Is a Counterargument — and Why Include It?</div>
+  <div class="section-sub">A strong argument doesn't ignore the other side. It addresses it directly and shows why your position is still correct. This is called a counterargument — and it actually makes your argument stronger, not weaker.</div>
+
+  <div class="card">
+    <div class="card-label teal">📌 Two Parts Every Time</div>
+    <p><span class="def-word">Part 1 — Acknowledge:</span> Show you understand why someone might disagree. Be fair and accurate — don't make the other side sound ridiculous.</p>
+    <p><span class="def-word">Part 2 — Rebut:</span> Explain why your argument is still correct, or why the opposing point doesn't outweigh your evidence.</p>
+    <p style="margin-top:12px">Think of it like a debate: you're not pretending the other side doesn't exist. You're showing that you've considered it — and you still believe you're right.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✗ Weak Counterargument (dismissive)</div>
+    <p><strong>Thesis:</strong> Schools should start later.</p>
+    <p>"Some people say schools shouldn't start later. But they're wrong because students need more sleep."</p>
+    <p style="margin-top:8px;font-size:14px;color:#8B2A2A">Why weak: Dismisses the other side without acknowledging any valid point. Doesn't show understanding of the opposing argument.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✓ Strong Counterargument</div>
+    <p><strong>Thesis:</strong> Schools should start later.</p>
+    <p><strong>Part 1:</strong> Critics of later start times argue that changing school schedules disrupts family routines, particularly for working parents who depend on current dismissal times for childcare.</p>
+    <p><strong>Part 2:</strong> However, this logistical challenge does not outweigh the documented academic and health benefits of later starts. School districts that have shifted times report solutions such as adjusted after-school programs and staggered sibling schedules — suggesting the disruption is manageable, while the benefits to student health are not.</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Counterargument Frame (Two-Part)</div>
+    <p><em>Critics might argue that [opposing position]</em>. This concern is understandable because <em>[why their point has some validity]</em>. However, <em>[why your argument is still stronger / what evidence contradicts their claim / what they're missing]</em>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn primary" onclick="goTo(1)">We Do — Let's Practice →</button>
+  </div>
+</div>
+
+<div id="sec-wedo" class="section">
+  <div class="section-eyebrow">We Do — Guided Practice</div>
+  <div class="section-heading">Evaluate the Counterarguments</div>
+  <div class="section-sub">Read the thesis below. Then answer questions about counterargument quality.</div>
+
+  <div class="card">
+    <div class="card-label navy">Thesis for This Exercise</div>
+    <p>"Community service should be a graduation requirement because it builds civic responsibility, it gives students real-world skills, and it addresses genuine needs in underserved communities."</p>
+  </div>
+
+  <div class="question-block" id="q1">
+    <div class="question-num">Question 1 of 3</div>
+    <div class="question-text">Which is the strongest Part 1 (Acknowledge) for this thesis?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q1" id="q1a"><label for="q1a">"Some people disagree with mandatory community service."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1b"><label for="q1b">"Opponents argue that mandatory service undermines the genuine spirit of volunteering — that requiring it turns a generous act into a bureaucratic obligation, potentially reducing students' intrinsic motivation to help others."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1c"><label for="q1c">"Community service takes time away from studying."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1d"><label for="q1d">"Not everyone likes community service."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q1', 1, 'Correct! This is a strong Part 1 because it states the opposing position fairly, specifically, and charitably. It presents the best version of the opposing argument — not a straw man — which makes the eventual rebuttal much more credible.', 'Not quite. A strong Part 1 presents the opposing argument at its most reasonable and specific. Vague or dismissive statements don't count as fair acknowledgment. Which option actually engages with the opposing argument seriously?')">Check My Answer</button>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="question-num">Question 2 of 3</div>
+    <div class="question-text">After acknowledging that mandatory service might reduce intrinsic motivation, which is the strongest Part 2 (Rebuttal)?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q2" id="q2a"><label for="q2a">"But they're wrong and community service is important."</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2b"><label for="q2b">"However, research on service-learning programs consistently shows that students who complete required service hours report higher rates of continued volunteering after graduation than those who never participated — suggesting that initial requirement can actually build long-term intrinsic motivation rather than destroy it."</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2c"><label for="q2c">"However, community service is still a good thing for students to do."</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2d"><label for="q2d">"However, students should just be more motivated."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q2', 1, 'Correct! This rebuttal directly addresses the specific concern raised — that required service reduces intrinsic motivation — and uses evidence to show the opposite is actually true. That's a complete, well-reasoned Part 2.', 'Not quite. A strong rebuttal directly addresses the opposing point with evidence or reasoning. It doesn't just reassert your original position. Which option actually engages with the concern about intrinsic motivation?')">Check My Answer</button>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <div class="question-block" id="q3">
+    <div class="question-num">Question 3 of 3</div>
+    <div class="question-text">What makes a counterargument WEAKER than the one above?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q3" id="q3a"><label for="q3a">It is too long and detailed.</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3b"><label for="q3b">It presents the opposing argument unfairly or dismisses it without real reasoning or evidence.</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3c"><label for="q3c">It uses too many transition words like "however."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3d"><label for="q3d">It agrees with the opposing side too much.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q3', 1, 'Correct! A weak counterargument either misrepresents the opposing view (straw man) or dismisses it without engaging with its actual logic. Both approaches make your argument look less credible, not more.', 'Not quite. Think about what makes an argument convincing to someone who doesn't already agree with you. What would make them stop taking your counterargument seriously?')">Check My Answer</button>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(0)">← I Do</button>
+    <button class="nav-btn primary" onclick="goTo(2)">You Do — Your Turn →</button>
+  </div>
+</div>
+
+<div id="sec-youdo" class="section">
+  <div class="section-eyebrow">You Do — Independent Practice</div>
+  <div class="section-heading">Write Your Counterargument</div>
+  <div class="section-sub">Use your thesis from the Centric project (Module 2, Step 1). Write a full two-part counterargument using the frame.</div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Two-Part Counterargument Frame</div>
+    <p>Critics might argue that <em>[opposing position — be fair and specific]</em>. This concern is understandable because <em>[why their point has validity]</em>. However, <em>[why your argument is still stronger, with evidence or reasoning]</em>.</p>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 1 — Write Your Full Counterargument</div>
+    <div class="question-text">Use your resilience thesis from the Centric project. Write a two-part counterargument using the frame above. Both parts must be in your response.</div>
+    <textarea placeholder="Critics might argue that...&#10;&#10;This concern is understandable because...&#10;&#10;However,..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd1')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd1" style="display:none"><span class="fb-icon">💡</span> <strong>Model (thesis: resilience is a skill anyone can develop):</strong> Critics might argue that resilience is largely determined by genetics and early childhood experience — that some people are simply wired to handle adversity better than others, and that trying to teach resilience to everyone is unrealistic. This concern is understandable because there is genuine research showing that stress response systems have biological components, and early trauma can have lasting psychological effects. However, this does not mean resilience cannot be developed — it means the starting point varies. Dr. Carol Dweck's growth mindset research and countless real-world examples, including Malala Yousafzai and the character Marcus, demonstrate that deliberate choices and practiced behaviors can build resilience regardless of where someone starts.</div>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 2 — Self-Evaluate</div>
+    <div class="question-text">Answer these two questions about your counterargument.</div>
+    <div class="question-hint">1. Did you represent the opposing view fairly — or did you make it sound ridiculous? 2. Did your rebuttal use evidence or reasoning, or did it just reassert your original claim?</div>
+    <textarea placeholder="1. I think I represented the opposing view fairly/unfairly because...&#10;2. My rebuttal used evidence/reasoning when I said..."></textarea>
+  </div>
+
+  <div class="rubric">
+    <div class="rubric-header">✦ Self-Check Rubric</div>
+    <div class="rubric-row">
+      <div class="rubric-cell level-1 level-label">Level 1</div>
+      <div class="rubric-cell level-2 level-label">Level 2</div>
+      <div class="rubric-cell level-3 level-label">Level 3</div>
+    </div>
+    <div class="rubric-row">
+      <div class="rubric-cell rubric-desc">I identified an opposing view and provided a basic response to it.</div>
+      <div class="rubric-cell rubric-desc">I used the two-part frame: fairly acknowledged the opposing argument and provided a reasoned rebuttal that references evidence.</div>
+      <div class="rubric-cell rubric-desc">My counterargument presents the opposing view at its strongest, and my rebuttal directly dismantles it with specific evidence and nuanced reasoning.</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(1)">← We Do</button>
+    <button class="nav-btn primary" onclick="document.querySelector('.main').innerHTML='<div class=complete-screen><div class=complete-icon>🏆</div><div class=complete-title>All Lessons Complete!</div><div class=complete-sub>You have finished all 7 Grade 6 intervention lessons. Copy your task responses and submit them to your mentor in Google Classroom.</div><div class=complete-badge>✓ Lesson 7 — Counterargument (RI.6.8)</div></div>'">Submit & Finish ✓</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+  let currentSection = 0;
+  const sections = ['ido', 'wedo', 'youdo'];
+
+  function goTo(idx) {
+    sections.forEach((s, i) => {
+      document.getElementById('sec-' + s).classList.toggle('active', i === idx);
+      document.getElementById('tab-' + i).className = 'progress-tab' +
+        (i === idx ? ' active' : (i < idx ? ' done' : ''));
+    });
+    currentSection = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function checkMC(qId, correctIdx, feedbackCorrect, feedbackWrong) {
+    const opts = document.querySelectorAll('#' + qId + ' .mc-option');
+    const selected = [...opts].findIndex(o => o.querySelector('input').checked);
+    if (selected === -1) { alert('Please select an answer first.'); return; }
+    const fb = document.getElementById('fb-' + qId);
+    opts.forEach((o, i) => {
+      o.classList.remove('correct', 'wrong');
+      if (i === correctIdx) o.classList.add('correct');
+      else if (i === selected && i !== correctIdx) o.classList.add('wrong');
+    });
+    if (selected === correctIdx) {
+      fb.className = 'feedback correct-fb';
+      fb.innerHTML = '<span class="fb-icon">✓</span> ' + feedbackCorrect;
+    } else {
+      fb.className = 'feedback wrong-fb';
+      fb.innerHTML = '<span class="fb-icon">✗</span> ' + feedbackWrong;
+    }
+    fb.style.display = 'block';
+  }
+
+  function showModelFeedback(id) {
+    const fb = document.getElementById('fb-' + id);
+    fb.className = 'feedback info-fb';
+    fb.style.display = 'block';
+  }
+</script>
+</body>
+</html>

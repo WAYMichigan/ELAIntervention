@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6: Evidence + Reasoning</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE1;
+    --teal: #1A5F6A;
+    --teal-lt: #E6F2F4;
+    --teal-mid: #2E8B9A;
+    --navy: #1A2E44;
+    --amber: #C47B2B;
+    --amber-lt: #FEF5E7;
+    --green: #2A6B3C;
+    --green-lt: #EBF5EE;
+    --red: #8B2A2A;
+    --red-lt: #F9EDED;
+    --gray: #666;
+    --gray-lt: #F0EDE8;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(26,46,68,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,46,68,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── Top header bar ── */
+  .header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .lesson-badge {
+    background: var(--teal-mid);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .header-title {
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .header-standard {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(26,46,68,0.08);
+  }
+  .progress-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+  }
+  .progress-tab {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .progress-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    font-weight: 600;
+  }
+  .progress-tab.done {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  .progress-tab .tab-icon { margin-right: 6px; }
+
+  /* ── Main layout ── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ── Section panels ── */
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Section label ── */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 6px;
+  }
+  .section-heading {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-label.teal { color: var(--teal); }
+  .card-label.amber { color: var(--amber); }
+  .card-label.navy { color: var(--navy); }
+
+  /* ── Practice text ── */
+  .text-box {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--navy);
+  }
+  .text-box-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .text-box p + p { margin-top: 14px; }
+
+  /* ── Model example ── */
+  .model-box {
+    background: var(--teal-lt);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    border: 1px solid rgba(26,95,106,0.15);
+  }
+  .model-box .model-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .model-box p { font-size: 15px; color: var(--navy); line-height: 1.7; }
+  .model-box strong { color: var(--teal); }
+
+  /* ── Frame box ── */
+  .frame-box {
+    background: var(--amber-lt);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border: 1px solid rgba(196,123,43,0.2);
+  }
+  .frame-box .frame-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .frame-box p { font-size: 15px; font-style: italic; color: var(--navy); }
+  .frame-box em { font-style: normal; font-weight: 600; color: var(--amber); }
+
+  /* ── Question blocks ── */
+  .question-block {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .question-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 8px;
+  }
+  .question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .question-hint {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* ── MC options ── */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(26,46,68,0.12);
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--cream);
+  }
+  .mc-option:hover { border-color: var(--teal-mid); background: var(--teal-lt); }
+  .mc-option input[type="radio"] { margin-top: 2px; accent-color: var(--teal); flex-shrink: 0; width: 16px; height: 16px; }
+  .mc-option label { font-size: 15px; cursor: pointer; line-height: 1.5; color: var(--navy); }
+  .mc-option.correct { border-color: var(--green); background: var(--green-lt); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-lt); }
+
+  /* ── Text areas ── */
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(26,46,68,0.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--cream);
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea:focus { outline: none; border-color: var(--teal-mid); background: white; }
+  textarea::placeholder { color: #aaa; }
+
+  /* ── Check answer button ── */
+  .check-btn {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    margin-top: 12px;
+  }
+  .check-btn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .check-btn:active { transform: translateY(0); }
+
+  /* ── Feedback ── */
+  .feedback {
+    display: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .feedback.correct-fb {
+    background: var(--green-lt);
+    border: 1px solid rgba(42,107,60,0.2);
+    color: var(--green);
+  }
+  .feedback.wrong-fb {
+    background: var(--red-lt);
+    border: 1px solid rgba(139,42,42,0.2);
+    color: var(--red);
+  }
+  .feedback.info-fb {
+    background: var(--teal-lt);
+    border: 1px solid rgba(26,95,106,0.2);
+    color: var(--teal);
+  }
+  .feedback .fb-icon { font-weight: 700; margin-right: 6px; }
+
+  /* ── Self-check rubric ── */
+  .rubric {
+    border: 1px solid rgba(26,46,68,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .rubric-header {
+    background: var(--navy);
+    color: white;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .rubric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell:last-child { border-right: none; }
+  .rubric-cell.level-label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rubric-cell.level-1 { background: #FFF8F0; color: var(--amber); }
+  .rubric-cell.level-2 { background: #F0F7FF; color: #2260A0; }
+  .rubric-cell.level-3 { background: var(--green-lt); color: var(--green); }
+  .rubric-desc { color: var(--navy); font-weight: 400; }
+
+  /* ── Nav buttons ── */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(26,46,68,0.1);
+  }
+  .nav-btn {
+    background: var(--white);
+    color: var(--navy);
+    border: 2px solid rgba(26,46,68,0.15);
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .nav-btn.primary {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .nav-btn.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Completion screen ── */
+  .complete-screen {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .complete-icon { font-size: 64px; margin-bottom: 20px; }
+  .complete-title {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .complete-sub { font-size: 16px; color: var(--gray); max-width: 420px; margin: 0 auto 28px; line-height: 1.6; }
+  .complete-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-lt);
+    border: 2px solid var(--green);
+    color: var(--green);
+    border-radius: 40px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Definition highlight ── */
+  .def-word { font-weight: 700; color: var(--teal); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: rgba(26,46,68,0.08); margin: 24px 0; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .header-standard { display: none; }
+    .rubric-row { grid-template-columns: 1fr; }
+    .rubric-cell { border-right: none; border-bottom: 1px solid rgba(26,46,68,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="lesson-badge">Grade 6 ELA · Module 2 · Lesson 6</span>
+    <span class="header-title">Evidence + Reasoning</span>
+    <span class="header-standard">ELA06.AW</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-tab active" id="tab-0" onclick="goTo(0)"><span class="tab-icon">📖</span> I Do</div>
+    <div class="progress-tab" id="tab-1" onclick="goTo(1)"><span class="tab-icon">🤝</span> We Do</div>
+    <div class="progress-tab" id="tab-2" onclick="goTo(2)"><span class="tab-icon">✏️</span> You Do</div>
+  </div>
+</div>
+
+<div class="main">
+  
+<div id="sec-ido" class="section active">
+  <div class="section-eyebrow">I Do — Watch and Learn</div>
+  <div class="section-heading">What's the Difference Between Evidence and Reasoning?</div>
+  <div class="section-sub">A lot of writers make the mistake of dropping evidence and walking away. Evidence alone doesn't prove anything. It's your <em>reasoning</em> — the explanation of how the evidence connects to your claim — that actually makes the argument.</div>
+
+  <div class="card">
+    <div class="card-label teal">📌 The Difference</div>
+    <p><span class="def-word">Evidence</span> — a specific fact, quote, statistic, or example that supports your claim. It comes from a source outside your own opinion.</p>
+    <p><span class="def-word">Reasoning</span> — your explanation of HOW the evidence proves your point. This is where your thinking goes.</p>
+    <p style="margin-top:12px">Think of it this way: evidence is the hammer. Reasoning is the swing. Without the swing, the nail doesn't move.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✗ Evidence Without Reasoning (incomplete)</div>
+    <p><strong>Claim:</strong> Resilience can be developed through practice.</p>
+    <p><strong>Evidence only:</strong> "Dr. Dweck's research shows that students with a growth mindset outperform those with a fixed mindset."</p>
+    <p style="margin-top:8px;font-size:14px;color:#8B2A2A">Why incomplete: The evidence is good, but the writer never explains how this proves that resilience can be developed. The connection is assumed, not argued.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✓ Evidence + Reasoning (complete)</div>
+    <p><strong>Claim:</strong> Resilience can be developed through practice.</p>
+    <p><strong>Evidence:</strong> "Dr. Dweck's research shows that students with a growth mindset outperform those with a fixed mindset."</p>
+    <p><strong>Reasoning:</strong> This supports the claim because a growth mindset — the belief that abilities improve through effort — is itself a form of resilience. If students can be taught to adopt this mindset and it measurably improves their performance, then resilience is not a fixed trait but a teachable skill.</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Evidence + Reasoning Frame (SRSD)</div>
+    <p>One piece of evidence that supports this claim is <em>[evidence — quote, fact, or example]</em> (from <em>[source]</em>). This supports my argument because <em>[explain the logical connection]</em>. In other words, <em>[restate in simpler terms why this proves your point]</em>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn primary" onclick="goTo(1)">We Do — Let's Practice →</button>
+  </div>
+</div>
+
+<div id="sec-wedo" class="section">
+  <div class="section-eyebrow">We Do — Guided Practice</div>
+  <div class="section-heading">Spot the Reasoning</div>
+  <div class="section-sub">Read the claim below, then answer questions about which responses correctly use evidence AND reasoning.</div>
+
+  <div class="card">
+    <div class="card-label navy">The Claim</div>
+    <p><strong>Thesis:</strong> Cities should invest in public libraries because they provide free educational resources, they serve as safe community spaces, and they reduce inequality in access to information.</p>
+    <p style="margin-top:8px;font-size:14px;color:var(--gray)">The questions below focus on supporting the first reason: "they provide free educational resources."</p>
+  </div>
+
+  <div class="question-block" id="q1">
+    <div class="question-num">Question 1 of 3</div>
+    <div class="question-text">Which response correctly uses both evidence AND reasoning?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q1" id="q1a"><label for="q1a">"Libraries have a lot of books and computers."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1b"><label for="q1b">"I think libraries are great because I used one when I was young."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1c"><label for="q1c">"According to the American Library Association, public libraries provide free access to over 2 billion books and digital resources annually. This supports the claim that libraries provide free educational resources because no other institution gives the public access to this volume of information at no cost — making them uniquely important for people who cannot afford private alternatives."</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1d"><label for="q1d">"The American Library Association says libraries are good."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q1', 2, 'Correct! This response has all three parts: a specific statistic as evidence, an explanation of how it connects to the claim, and reasoning that goes beyond the obvious (noting that libraries serve people who cannot afford alternatives).', 'Not quite. Look for the response that includes: a specific fact or quote, AND an explanation of how that fact proves the claim. Opinion and vague statements don't count as either.')">Check My Answer</button>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="question-num">Question 2 of 3</div>
+    <div class="question-text">A student writes: "Libraries have many programs for kids like story time and summer reading." What is missing from this response?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q2" id="q2a"><label for="q2a">It needs a longer list of programs.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2b"><label for="q2b">It has evidence (the programs) but no reasoning — the student never explains how these programs prove that libraries provide free educational resources.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2c"><label for="q2c">It needs a citation from a source.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2d"><label for="q2d">Nothing — this is a complete response.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q2', 1, 'Correct! The student describes evidence but never connects it to the claim. The missing piece is: "This supports the claim that libraries provide free educational resources because these programs give children access to literacy development they might not otherwise receive." That's reasoning.', 'Not quite. The student mentioned evidence. Ask yourself: did the student explain HOW that evidence proves the claim? That explanation is called reasoning.')">Check My Answer</button>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <div class="question-block" id="q3">
+    <div class="question-num">Question 3 of 3</div>
+    <div class="question-text">Which sentence is the REASONING part of an evidence + reasoning response?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q3" id="q3a"><label for="q3a">"A 2022 Pew Research study found that 77% of Americans consider their local library important to their community."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3b"><label for="q3b">"Libraries are important to many people."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3c"><label for="q3c">"This statistic is significant because it shows that public support for libraries crosses demographic lines — suggesting that the value of free educational resources is recognized broadly, not just by those who use libraries most."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3d"><label for="q3d">"I found this research online."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q3', 2, 'Correct! This sentence explains WHY the statistic is significant and HOW it connects to the argument. That's exactly what reasoning does — it bridges the gap between the evidence and the claim.', 'Not quite. Reasoning is not the evidence itself. It's the sentence that explains how or why the evidence proves the point. Which option does that?')">Check My Answer</button>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(0)">← I Do</button>
+    <button class="nav-btn primary" onclick="goTo(2)">You Do — Your Turn →</button>
+  </div>
+</div>
+
+<div id="sec-youdo" class="section">
+  <div class="section-eyebrow">You Do — Independent Practice</div>
+  <div class="section-heading">Build Two Evidence + Reasoning Responses</div>
+  <div class="section-sub">Use your notes from the Centric project, or use the prompt below. Complete the frame twice — once from a literary source and once from an informational source.</div>
+
+  <div class="card">
+    <div class="card-label navy">The Claim</div>
+    <p><strong>Your thesis from Module 2:</strong> Use the thesis statement you wrote in the Centric project, OR use this one:</p>
+    <p style="margin-top:10px;font-style:italic">"Resilience is a skill that can be developed because it is built through repeated challenges, it is supported by evidence from research, and examples from both fiction and real life prove it is not a fixed trait."</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Evidence + Reasoning Frame</div>
+    <p>One piece of evidence that supports this claim is "<em>[quote or fact]</em>" (from <em>[source]</em>). This supports my argument because <em>[connection to claim]</em>. In other words, <em>[restate in simpler terms]</em>.</p>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 1 — Evidence from the Literary Text</div>
+    <div class="question-text">Use a quote or detail from Survival at Mile Marker 7 (or your Hatchet excerpt). Complete the full frame.</div>
+    <textarea placeholder="One piece of evidence from the literary text is &quot;...&quot;. This supports my argument because..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd1')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd1" style="display:none"><span class="fb-icon">💡</span> <strong>Model:</strong> One piece of evidence from the literary text is "It was one thing, right now, that he could actually do" (Survival at Mile Marker 7). This supports my argument because Marcus — a character with no survival training — is actively choosing to focus on an immediate, achievable task rather than being paralyzed by fear. In other words, resilience here isn't a trait he was born with; it's a choice he makes in the moment, which proves it can be practiced.</div>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task 2 — Evidence from the Informational Text or Video</div>
+    <div class="question-text">Use a fact or detail from the Malala video or the Amara Osei profile. Complete the full frame.</div>
+    <textarea placeholder="One piece of evidence from the informational source is &quot;...&quot;. This supports my argument because..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd2')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd2" style="display:none"><span class="fb-icon">💡</span> <strong>Model:</strong> One piece of evidence from the Malala video is her statement that education is "the most powerful weapon" she could use to change the world. This supports my argument because Malala did not begin life with political power or resources — she developed her resilience deliberately, by choosing to continue attending school and speaking publicly despite explicit threats. In other words, her resilience was built action by action, not given to her.</div>
+  </div>
+
+  <div class="rubric">
+    <div class="rubric-header">✦ Self-Check Rubric</div>
+    <div class="rubric-row">
+      <div class="rubric-cell level-1 level-label">Level 1</div>
+      <div class="rubric-cell level-2 level-label">Level 2</div>
+      <div class="rubric-cell level-3 level-label">Level 3</div>
+    </div>
+    <div class="rubric-row">
+      <div class="rubric-cell rubric-desc">I provided evidence from each source and added a brief connection to the claim.</div>
+      <div class="rubric-cell rubric-desc">I used the full frame: specific evidence, a clear explanation of the connection, and a restatement in simpler terms for both sources.</div>
+      <div class="rubric-cell rubric-desc">My reasoning goes beyond the obvious — I explain exactly why this evidence is significant, what it implies about the argument, and why no other evidence would work as well.</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(1)">← We Do</button>
+    <button class="nav-btn primary" onclick="document.querySelector('.main').innerHTML='<div class=complete-screen><div class=complete-icon>🔗</div><div class=complete-title>Lesson 6 Complete!</div><div class=complete-sub>Great reasoning work. Copy your two task responses and submit them to your mentor in Google Classroom.</div><div class=complete-badge>✓ Lesson 6 — Evidence + Reasoning (ELA06.AW)</div></div>'">Submit & Finish ✓</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+  let currentSection = 0;
+  const sections = ['ido', 'wedo', 'youdo'];
+
+  function goTo(idx) {
+    sections.forEach((s, i) => {
+      document.getElementById('sec-' + s).classList.toggle('active', i === idx);
+      document.getElementById('tab-' + i).className = 'progress-tab' +
+        (i === idx ? ' active' : (i < idx ? ' done' : ''));
+    });
+    currentSection = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function checkMC(qId, correctIdx, feedbackCorrect, feedbackWrong) {
+    const opts = document.querySelectorAll('#' + qId + ' .mc-option');
+    const selected = [...opts].findIndex(o => o.querySelector('input').checked);
+    if (selected === -1) { alert('Please select an answer first.'); return; }
+    const fb = document.getElementById('fb-' + qId);
+    opts.forEach((o, i) => {
+      o.classList.remove('correct', 'wrong');
+      if (i === correctIdx) o.classList.add('correct');
+      else if (i === selected && i !== correctIdx) o.classList.add('wrong');
+    });
+    if (selected === correctIdx) {
+      fb.className = 'feedback correct-fb';
+      fb.innerHTML = '<span class="fb-icon">✓</span> ' + feedbackCorrect;
+    } else {
+      fb.className = 'feedback wrong-fb';
+      fb.innerHTML = '<span class="fb-icon">✗</span> ' + feedbackWrong;
+    }
+    fb.style.display = 'block';
+  }
+
+  function showModelFeedback(id) {
+    const fb = document.getElementById('fb-' + id);
+    fb.className = 'feedback info-fb';
+    fb.style.display = 'block';
+  }
+</script>
+</body>
+</html>

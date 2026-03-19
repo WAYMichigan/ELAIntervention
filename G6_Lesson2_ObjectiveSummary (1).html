@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2: Objective Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE1;
+    --teal: #1A5F6A;
+    --teal-lt: #E6F2F4;
+    --teal-mid: #2E8B9A;
+    --navy: #1A2E44;
+    --amber: #C47B2B;
+    --amber-lt: #FEF5E7;
+    --green: #2A6B3C;
+    --green-lt: #EBF5EE;
+    --red: #8B2A2A;
+    --red-lt: #F9EDED;
+    --gray: #666;
+    --gray-lt: #F0EDE8;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(26,46,68,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,46,68,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── Top header bar ── */
+  .header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .lesson-badge {
+    background: var(--teal-mid);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .header-title {
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .header-standard {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(26,46,68,0.08);
+  }
+  .progress-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+  }
+  .progress-tab {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .progress-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    font-weight: 600;
+  }
+  .progress-tab.done {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  .progress-tab .tab-icon { margin-right: 6px; }
+
+  /* ── Main layout ── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ── Section panels ── */
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Section label ── */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 6px;
+  }
+  .section-heading {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-label.teal { color: var(--teal); }
+  .card-label.amber { color: var(--amber); }
+  .card-label.navy { color: var(--navy); }
+
+  /* ── Practice text ── */
+  .text-box {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--navy);
+  }
+  .text-box-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .text-box p + p { margin-top: 14px; }
+
+  /* ── Model example ── */
+  .model-box {
+    background: var(--teal-lt);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    border: 1px solid rgba(26,95,106,0.15);
+  }
+  .model-box .model-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .model-box p { font-size: 15px; color: var(--navy); line-height: 1.7; }
+  .model-box strong { color: var(--teal); }
+
+  /* ── Frame box ── */
+  .frame-box {
+    background: var(--amber-lt);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border: 1px solid rgba(196,123,43,0.2);
+  }
+  .frame-box .frame-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .frame-box p { font-size: 15px; font-style: italic; color: var(--navy); }
+  .frame-box em { font-style: normal; font-weight: 600; color: var(--amber); }
+
+  /* ── Question blocks ── */
+  .question-block {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(26,46,68,0.06);
+  }
+  .question-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 8px;
+  }
+  .question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .question-hint {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* ── MC options ── */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(26,46,68,0.12);
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--cream);
+  }
+  .mc-option:hover { border-color: var(--teal-mid); background: var(--teal-lt); }
+  .mc-option input[type="radio"] { margin-top: 2px; accent-color: var(--teal); flex-shrink: 0; width: 16px; height: 16px; }
+  .mc-option label { font-size: 15px; cursor: pointer; line-height: 1.5; color: var(--navy); }
+  .mc-option.correct { border-color: var(--green); background: var(--green-lt); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-lt); }
+
+  /* ── Text areas ── */
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(26,46,68,0.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--cream);
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  textarea:focus { outline: none; border-color: var(--teal-mid); background: white; }
+  textarea::placeholder { color: #aaa; }
+
+  /* ── Check answer button ── */
+  .check-btn {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    margin-top: 12px;
+  }
+  .check-btn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .check-btn:active { transform: translateY(0); }
+
+  /* ── Feedback ── */
+  .feedback {
+    display: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .feedback.correct-fb {
+    background: var(--green-lt);
+    border: 1px solid rgba(42,107,60,0.2);
+    color: var(--green);
+  }
+  .feedback.wrong-fb {
+    background: var(--red-lt);
+    border: 1px solid rgba(139,42,42,0.2);
+    color: var(--red);
+  }
+  .feedback.info-fb {
+    background: var(--teal-lt);
+    border: 1px solid rgba(26,95,106,0.2);
+    color: var(--teal);
+  }
+  .feedback .fb-icon { font-weight: 700; margin-right: 6px; }
+
+  /* ── Self-check rubric ── */
+  .rubric {
+    border: 1px solid rgba(26,46,68,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .rubric-header {
+    background: var(--navy);
+    color: white;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .rubric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid rgba(26,46,68,0.08);
+  }
+  .rubric-cell:last-child { border-right: none; }
+  .rubric-cell.level-label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rubric-cell.level-1 { background: #FFF8F0; color: var(--amber); }
+  .rubric-cell.level-2 { background: #F0F7FF; color: #2260A0; }
+  .rubric-cell.level-3 { background: var(--green-lt); color: var(--green); }
+  .rubric-desc { color: var(--navy); font-weight: 400; }
+
+  /* ── Nav buttons ── */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(26,46,68,0.1);
+  }
+  .nav-btn {
+    background: var(--white);
+    color: var(--navy);
+    border: 2px solid rgba(26,46,68,0.15);
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .nav-btn.primary {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .nav-btn.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Completion screen ── */
+  .complete-screen {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .complete-icon { font-size: 64px; margin-bottom: 20px; }
+  .complete-title {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .complete-sub { font-size: 16px; color: var(--gray); max-width: 420px; margin: 0 auto 28px; line-height: 1.6; }
+  .complete-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-lt);
+    border: 2px solid var(--green);
+    color: var(--green);
+    border-radius: 40px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Definition highlight ── */
+  .def-word { font-weight: 700; color: var(--teal); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: rgba(26,46,68,0.08); margin: 24px 0; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .header-standard { display: none; }
+    .rubric-row { grid-template-columns: 1fr; }
+    .rubric-cell { border-right: none; border-bottom: 1px solid rgba(26,46,68,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="lesson-badge">Grade 6 ELA · Module 1 · Lesson 2</span>
+    <span class="header-title">Objective Summary</span>
+    <span class="header-standard">RI.6.2</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-tab active" id="tab-0" onclick="goTo(0)"><span class="tab-icon">📖</span> I Do</div>
+    <div class="progress-tab" id="tab-1" onclick="goTo(1)"><span class="tab-icon">🤝</span> We Do</div>
+    <div class="progress-tab" id="tab-2" onclick="goTo(2)"><span class="tab-icon">✏️</span> You Do</div>
+  </div>
+</div>
+
+<div class="main">
+  
+<!-- I DO -->
+<div id="sec-ido" class="section active">
+  <div class="section-eyebrow">I Do — Watch and Learn</div>
+  <div class="section-heading">What Makes a Summary Objective?</div>
+  <div class="section-sub">A summary reports what a text says. An <em>objective</em> summary does that without adding your own opinions, reactions, or feelings. Think of yourself as a reporter, not a reviewer.</div>
+
+  <div class="card">
+    <div class="card-label teal">📌 The Big Idea</div>
+    <p>An objective summary has three things:</p>
+    <p>1. The <span class="def-word">central idea</span> — what the text is mainly about</p>
+    <p>2. The <span class="def-word">key supporting details</span> — the most important evidence or examples</p>
+    <p>3. <span class="def-word">No personal opinion</span> — no "I think," "I feel," "I believe," or "this is interesting"</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✗ Not Objective (Opinion Included)</div>
+    <p>"This article was really interesting because it talks about a community garden that I think everyone should support. The people working on it are very inspiring and it's amazing what they accomplished."</p>
+  </div>
+
+  <div class="model-box">
+    <div class="model-label">✓ Objective Summary</div>
+    <p>"This article describes the creation of a community garden in Detroit's Eastside neighborhood. Residents converted an abandoned lot into a working garden that now provides produce for over 40 families. The article explains the challenges the group faced — including funding and soil contamination — and how they resolved each one over two growing seasons."</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Sentence Frame — Objective Summary</div>
+    <p>This <em>[article / text / passage]</em> explains <em>[topic]</em>. The author describes <em>[key detail 1]</em> and <em>[key detail 2]</em>. By the end, the reader understands that <em>[main takeaway]</em>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn primary" onclick="goTo(1)">We Do — Let's Practice →</button>
+  </div>
+</div>
+
+<!-- WE DO -->
+<div id="sec-wedo" class="section">
+  <div class="section-eyebrow">We Do — Guided Practice</div>
+  <div class="section-heading">Read and Answer Together</div>
+  <div class="section-sub">Read the short informational text below, then answer the questions.</div>
+
+  <div class="text-box">
+    <div class="text-box-label">📄 Practice Text — "Seeds in the Concrete"</div>
+    <p>In 2018, a group of high school students in Flint, Michigan launched a project called GrowFlint — a student-run urban farming initiative aimed at addressing food insecurity in their neighborhood. Working with a local nonprofit, the students transformed three vacant lots into productive growing spaces.</p>
+    <p>In the first year, GrowFlint produced over 800 pounds of vegetables, which were distributed free of charge at a weekly market. The students managed every aspect of the operation: planting schedules, soil testing, volunteer coordination, and community outreach. Two of the original founders were offered college scholarships specifically for their leadership in the project.</p>
+    <p>Research from the University of Michigan found that neighborhoods with community growing projects show measurable improvements in social cohesion and reduced food insecurity within three years of launch. GrowFlint has since expanded to five locations across the city.</p>
+  </div>
+
+  <div class="question-block" id="q1">
+    <div class="question-num">Question 1 of 3</div>
+    <div class="question-text">What is the central idea of this article?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q1" id="q1a"><label for="q1a">Urban farming is the best solution to food insecurity in American cities.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1b"><label for="q1b">GrowFlint is a student-run urban farming project in Flint that addresses food insecurity and has expanded significantly.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1c"><label for="q1c">Two students from GrowFlint won college scholarships for their leadership.</label></div>
+      <div class="mc-option"><input type="radio" name="q1" id="q1d"><label for="q1d">The University of Michigan conducted research on community growing projects.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q1', 1, 'Correct! The central idea covers the whole article — what the project is, what it does, and its growth. The other options are supporting details, not the main point.', 'Not quite. The central idea should cover the whole article, not just one part of it. Which option best describes what the entire text is about?')">Check My Answer</button>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="question-num">Question 2 of 3</div>
+    <div class="question-text">Which of these sentences does NOT belong in an objective summary of this article?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q2" id="q2a"><label for="q2a">GrowFlint produced over 800 pounds of vegetables in its first year.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2b"><label for="q2b">The project started with three vacant lots and expanded to five locations.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2c"><label for="q2c">I think this project proves that students can solve real community problems.</label></div>
+      <div class="mc-option"><input type="radio" name="q2" id="q2d"><label for="q2d">Research connected community growing projects to lower food insecurity.</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q2', 2, 'Correct! "I think" is an instant signal that the sentence is opinion, not fact. An objective summary never includes the writer's personal judgment.', 'Not quite. Look for the sentence that contains a personal opinion or reaction rather than a fact from the article.')">Check My Answer</button>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <div class="question-block" id="q3">
+    <div class="question-num">Question 3 of 3</div>
+    <div class="question-text">Which summary is the most objective and complete?</div>
+    <div class="mc-options">
+      <div class="mc-option"><input type="radio" name="q3" id="q3a"><label for="q3a">"This article is about some students who grew food and it's really inspiring."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3b"><label for="q3b">"This article describes GrowFlint, a student-run urban farming project in Flint that converted vacant lots into growing spaces, produced hundreds of pounds of food, and expanded to five locations."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3c"><label for="q3c">"Two students got scholarships. The project grew vegetables. It was a good project."</label></div>
+      <div class="mc-option"><input type="radio" name="q3" id="q3d"><label for="q3d">"I think urban farming should be in every city because this article proves it works."</label></div>
+    </div>
+    <button class="check-btn" onclick="checkMC('q3', 1, 'Correct! This summary states the topic, key details, and outcome — all without any personal opinion. It uses reporting language (describes, converted, expanded) rather than judgment language.', 'Not quite. Check for: Does it cover the whole article? Does it avoid opinion words? Does it use facts from the text?')">Check My Answer</button>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(0)">← I Do</button>
+    <button class="nav-btn primary" onclick="goTo(2)">You Do — Your Turn →</button>
+  </div>
+</div>
+
+<!-- YOU DO -->
+<div id="sec-youdo" class="section">
+  <div class="section-eyebrow">You Do — Independent Practice</div>
+  <div class="section-heading">Write Your Own Objective Summary</div>
+  <div class="section-sub">Read the short text below — different from the We Do text. Write a 3–4 sentence objective summary using the sentence frame.</div>
+
+  <div class="text-box">
+    <div class="text-box-label">📄 New Practice Text — "The Last Library"</div>
+    <p>When budget cuts threatened to close the Riverside Branch Library in 2021, a coalition of local residents organized a campaign to save it. Over eight weeks, they collected more than 3,000 signatures, held community reading events, and presented cost-saving proposals to the city council.</p>
+    <p>The council ultimately voted to keep the library open and approved a reduced but sustainable budget. Library usage increased by 22% in the following year, driven largely by new after-school programs the community had proposed as part of their campaign. The organizers credited their success to clear documentation of the library's impact on underserved families in the district.</p>
+  </div>
+
+  <div class="frame-box">
+    <div class="frame-label">✦ Sentence Frame</div>
+    <p>This <em>[article / text / passage]</em> explains <em>[topic]</em>. The author describes <em>[key detail 1]</em> and <em>[key detail 2]</em>. By the end, the reader understands that <em>[main takeaway]</em>.</p>
+  </div>
+
+  <div class="question-block">
+    <div class="question-num">Task — Write Your Summary</div>
+    <div class="question-text">Write a 3–4 sentence objective summary of "The Last Library." Use the sentence frame above. No personal opinions.</div>
+    <textarea placeholder="This article explains..."></textarea>
+    <button class="check-btn" onclick="showModelFeedback('yd1')">See a Model Response</button>
+    <div class="feedback info-fb" id="fb-yd1" style="display:none"><span class="fb-icon">💡</span> <strong>Model:</strong> This article describes a community campaign to prevent the closure of the Riverside Branch Library. Residents collected signatures, held events, and presented proposals to the city council over eight weeks. The council voted to keep the library open with a reduced budget. In the year that followed, library usage increased by 22% due to new after-school programs the community had suggested.</div>
+  </div>
+
+  <div class="rubric">
+    <div class="rubric-header">✦ Self-Check Rubric</div>
+    <div class="rubric-row">
+      <div class="rubric-cell level-1 level-label">Level 1</div>
+      <div class="rubric-cell level-2 level-label">Level 2</div>
+      <div class="rubric-cell level-3 level-label">Level 3</div>
+    </div>
+    <div class="rubric-row">
+      <div class="rubric-cell rubric-desc">My summary covers the main topic and avoids obvious opinions, but may miss key details or use vague language.</div>
+      <div class="rubric-cell rubric-desc">My summary is objective, covers the central idea and at least two key details, and uses reporting language throughout.</div>
+      <div class="rubric-cell rubric-desc">My summary is precise, objective, covers all major points in logical order, and would give someone who hasn't read the text an accurate understanding of it.</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goTo(1)">← We Do</button>
+    <button class="nav-btn primary" onclick="document.querySelector('.main').innerHTML='<div class=complete-screen><div class=complete-icon>📋</div><div class=complete-title>Lesson 2 Complete!</div><div class=complete-sub>Nice work on objective summary. Copy your Task response and submit it to your mentor in Google Classroom.</div><div class=complete-badge>✓ Lesson 2 — Objective Summary (RI.6.2)</div></div>'">Submit & Finish ✓</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+  let currentSection = 0;
+  const sections = ['ido', 'wedo', 'youdo'];
+
+  function goTo(idx) {
+    sections.forEach((s, i) => {
+      document.getElementById('sec-' + s).classList.toggle('active', i === idx);
+      document.getElementById('tab-' + i).className = 'progress-tab' +
+        (i === idx ? ' active' : (i < idx ? ' done' : ''));
+    });
+    currentSection = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function checkMC(qId, correctIdx, feedbackCorrect, feedbackWrong) {
+    const opts = document.querySelectorAll('#' + qId + ' .mc-option');
+    const selected = [...opts].findIndex(o => o.querySelector('input').checked);
+    if (selected === -1) { alert('Please select an answer first.'); return; }
+    const fb = document.getElementById('fb-' + qId);
+    opts.forEach((o, i) => {
+      o.classList.remove('correct', 'wrong');
+      if (i === correctIdx) o.classList.add('correct');
+      else if (i === selected && i !== correctIdx) o.classList.add('wrong');
+    });
+    if (selected === correctIdx) {
+      fb.className = 'feedback correct-fb';
+      fb.innerHTML = '<span class="fb-icon">✓</span> ' + feedbackCorrect;
+    } else {
+      fb.className = 'feedback wrong-fb';
+      fb.innerHTML = '<span class="fb-icon">✗</span> ' + feedbackWrong;
+    }
+    fb.style.display = 'block';
+  }
+
+  function showModelFeedback(id) {
+    const fb = document.getElementById('fb-' + id);
+    fb.className = 'feedback info-fb';
+    fb.style.display = 'block';
+  }
+</script>
+</body>
+</html>
